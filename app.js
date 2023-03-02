@@ -125,6 +125,17 @@ const displayModalData = (modalData) => {
         </div>
     </div>
 
+    
+    <div class="col">
+        <div class="card text-center">
+            <img src="${image_link[0]}" class="card-img-top p-1 " alt="...">
+            <div class="card-body">
+                <h6 class="card-title">${input_output_examples[0].input}</h6>
+                <p class="card-text">${input_output_examples[0].output}</p>
+            </div>
+        </div>
+    </div>
+
     `
     // modal features details
     const ulFeature = document.getElementById(`modal-features-${id}`);
@@ -143,3 +154,21 @@ const displayModalData = (modalData) => {
 loadData();
 // invoking modal data
 loadModalData('03');
+
+
+
+/* 
+
+<div class="col">
+<div class="card">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">This is a longer card with supporting text below as a
+            natural lead-in to additional content. This content is a little bit
+            longer.</p>
+    </div>
+</div>
+</div>
+
+ */
