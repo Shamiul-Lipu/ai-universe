@@ -6,15 +6,29 @@ const loadData = async (datalimit) => {
     const res = await fetch(url);
     const allData = await res.json();
     displayData(allData.data.tools, datalimit);
-    // console.log(allData.data.tools);
 }
+
+// fetching(load) sort data
+const loadsortData = async (datalimit) => {
+    // start spinner
+    toggleSpinner(true);
+    const url = `https://openapi.programming-hero.com/api/ai/tools`;
+    const res = await fetch(url);
+    const allData = await res.json();
+    allData.data.tools.sort(function (a, b) {
+        return new Date(a.published_in) - new Date(b.published_in)
+    });
+    displayData(allData.data.tools, datalimit);
+}
+
+
+
 
 // display all data
 const displayData = (dataList, datalimit) => {
-    // console.log(dataList, datalimit);
     const cardContainer = document.getElementById('card-container');
     cardContainer.textContent = '';
-    // limit data
+    // limit data/show-all
     if (datalimit === undefined) {
         dataList = dataList.slice(0, 6);
     }
@@ -23,9 +37,11 @@ const displayData = (dataList, datalimit) => {
         dataList = dataList;
         showAllBtn.classList.add('d-none');
     }
+
     // display single card
     dataList.forEach(data => {
         const { id, name, features, published_in, image } = data;
+
         cardContainer.innerHTML += `     
 
         <div class="col">
@@ -88,11 +104,10 @@ const loadModalData = async (id) => {
 
 // display on modal's card
 const displayModalData = (modalData) => {
-    console.log(modalData);
     const { id, description, pricing, features, integrations, input_output_examples, image_link, accuracy } = modalData;
     const cards = document.getElementById('card-details');
 
-    // Card-One display
+    // Modal Card display
     cards.innerHTML = `
     
     <div class="col">
@@ -145,30 +160,18 @@ const displayModalData = (modalData) => {
     // modal integrations details
     const ulIntegrations = document.getElementById(`modal-integrations-${id}`);
     integrations.forEach(integration => {
-        console.log(integration)
         ulIntegrations.innerHTML += `<li>${integration}</li>`
     })
 }
+
+
+// adding button sort by date
+document.getElementById('btn-sort').addEventListener('click', function () {
+    loadsortData();
+})
 
 // invoking all data
 loadData();
 // invoking modal data
 loadModalData('03');
 
-
-
-/* 
-
-<div class="col">
-<div class="card">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a longer card with supporting text below as a
-            natural lead-in to additional content. This content is a little bit
-            longer.</p>
-    </div>
-</div>
-</div>
-
- */
