@@ -1,15 +1,29 @@
 // fetching(load) all data
-const loadData = async () => {
+const loadData = async (datalimit) => {
+    // start spinner
+    toggleSpinner(true);
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
     const res = await fetch(url);
     const allData = await res.json();
-    displayData(allData.data.tools);
+    displayData(allData.data.tools, datalimit);
+    // console.log(allData.data.tools);
 }
 
 // display all data
-const displayData = (dataList) => {
-    console.log(dataList);
+const displayData = (dataList, datalimit) => {
+    console.log(dataList, datalimit);
     const cardContainer = document.getElementById('card-container');
+    cardContainer.textContent = '';
+    // limit data
+    if (datalimit === undefined) {
+        dataList = dataList.slice(0, 6);
+    }
+    else {
+        const showAllBtn = document.getElementById('show-all');
+        dataList = dataList;
+        showAllBtn.classList.add('d-none');
+    }
+    // display single card
     dataList.forEach(data => {
         const { id, name, features, published_in, image } = data;
         cardContainer.innerHTML += `     
@@ -40,16 +54,29 @@ const displayData = (dataList) => {
         </div>
     
         `
+        // card feastures list
         let countFeatures = 1;
-        console.log(features);
         const ul = document.getElementById(`features-${id}`)
         features.forEach(feature => {
             ul.innerHTML += `<li>${countFeatures++}. ${feature}</li>`;
-            console.log(feature)
         });
     });
+    // stop spinner
+    toggleSpinner(false);
 }
 
+// toggle Spinner functionality
+const toggleSpinner = (isLoading) => {
+    const spinnig = document.getElementById('loding-spinner');
+    isLoading ? spinnig.classList.remove('d-none') : spinnig.classList.add('d-none');
+}
+
+// Show-all button
+document.getElementById('btn-show-all').addEventListener('click', function () {
+    // star spinner
+    toggleSpinner(true);
+    loadData(6);
+})
 
 
 // invoking all data

@@ -21,15 +21,26 @@
     <!-- ------------ -->
     <main>
         <!-- Display section -->
-        <section class="container mx-auto">
+        <section class="container mx-auto py-5">
             <!-- sort by date -->
-            <div id="" class="text-center d-none">
+            <div id="" class="text-center pb-5">
                 <button class="fw-bold btn btn-danger py-3 px-4">Sort By Date</button>
+            </div>
+
+            <!-- spinner -->
+            <div id="loding-spinner" class="d-flex justify-content-center d-none pb-5">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
 
             <!-- display cards -->
             <div id="card-container" class="row row-cols-1 row-cols-md-3 g-4">
                 <!-- cards -->
+            </div>
+            <!-- show-all button -->
+            <div id="show-all" class="text-center mt-4">
+                <button id="btn-show-all" class="fw-bold btn btn-danger py-3 px-4">Show All</button>
             </div>
         </section>
     </main>
