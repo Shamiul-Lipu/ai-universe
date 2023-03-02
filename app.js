@@ -11,7 +11,7 @@ const loadData = async (datalimit) => {
 
 // display all data
 const displayData = (dataList, datalimit) => {
-    console.log(dataList, datalimit);
+    // console.log(dataList, datalimit);
     const cardContainer = document.getElementById('card-container');
     cardContainer.textContent = '';
     // limit data
@@ -45,7 +45,7 @@ const displayData = (dataList, datalimit) => {
                             <h5>${name}</h5>
                             <p><i class="bi bi-calendar4-week px-1"></i>${published_in}</p>
                         </div>
-                        <button onclick="getDetails('${id}')" class="rounded rounded-circle  border-0 text-danger h3"><i
+                        <button onclick="loadModalData('${id}')" class="rounded rounded-circle  border-0 text-danger h3" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                 class="bi bi-arrow-right-short"></i></button>
                     </div>
                     </p>
@@ -78,6 +78,68 @@ document.getElementById('btn-show-all').addEventListener('click', function () {
     loadData(6);
 })
 
+// data on modal
+const loadModalData = async (id) => {
+    const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
+    const res = await fetch(url);
+    const modalData = await res.json();
+    displayModalData(modalData.data);
+}
+
+// display on modal's card
+const displayModalData = (modalData) => {
+    console.log(modalData);
+    const { id, description, pricing, features, integrations, input_output_examples, image_link, accuracy } = modalData;
+    const cards = document.getElementById('card-details');
+
+    // Card-One display
+    cards.innerHTML = `
+    
+    <div class="col">
+        <div class="card card-one">
+            <div class="card-body">
+                <h6 class="card-title">${description}</h6>
+                <div class="d-flex text-center">
+                    <p class="card-text p-2 m-1 bg-white rounded-3 text-success fw-bold">
+                        ${pricing[0].price}<br>${pricing[0].plan}</p>
+                    <p class="card-text p-2 m-1 bg-white rounded-3 text-warning fw-bold">
+                    ${pricing[1].price}<br>${pricing[1].plan}</p>
+                    <p class="card-text p-2 m-1 bg-white rounded-3 text-danger fw-bold">
+                    ${pricing[2].price}<br>${pricing[2].plan}</p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6>Features</h6>
+                        <ul id="modal-features-${id}">
+                            
+                        </ul>
+                    </div>
+                    <div>
+                        <h6>Integrations</h6>
+                        <ul id="modal-integrations-${id}">
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    `
+    // modal features details
+    const ulFeature = document.getElementById(`modal-features-${id}`);
+    for (const key in features) {
+        ulFeature.innerHTML += `<li>${features[key].feature_name}</li>`;
+    }
+    // modal integrations details
+    const ulIntegrations = document.getElementById(`modal-integrations-${id}`);
+    integrations.forEach(integration => {
+        console.log(integration)
+        ulIntegrations.innerHTML += `<li>${integration}</li>`
+    })
+}
 
 // invoking all data
 loadData();
+// invoking modal data
+loadModalData('03');

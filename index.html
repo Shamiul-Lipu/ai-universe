@@ -11,6 +11,25 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- Bootstrap icon link -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <style>
+        .cross {
+            background-color: red;
+            top: -23px;
+            position: relative;
+            left: 23px;
+            border-radius: 50%;
+        }
+
+        .card-one {
+            border: 1px solid red;
+            background-color: rgb(247, 234, 234);
+        }
+
+        .my-width {
+            max-width: 900px;
+            max-height: 800px;
+        }
+    </style>
 </head>
 
 <body>
@@ -42,7 +61,46 @@
             <div id="show-all" class="text-center mt-4">
                 <button id="btn-show-all" class="fw-bold btn btn-danger py-3 px-4">Show All</button>
             </div>
+
+            <!-- modal -->
+            <!-- Modal -->
+            <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered my-width">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close cross" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+
+                        <!-- card-details -->
+                        <div class="modal-body">
+                            <div id="card-details" class="row row-cols-1 row-cols-md-2 g-4">
+                                <!-- card one -->
+
+                                <!-- card two -->
+                                <div class="col">
+                                    <div class="card">
+                                        <img src="..." class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Card title</h5>
+                                            <p class="card-text">This is a longer card with supporting text below as a
+                                                natural lead-in to additional content. This content is a little bit
+                                                longer.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
         </section>
+
     </main>
 
 
