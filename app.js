@@ -63,7 +63,7 @@ const displayData = (dataList, datalimit) => {
             <div class="card h-100 shadow p-3 mb-5 bg-body rounded">
                 <img src="${image}" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Features</h5>
+                    <h5 class="card-title fw-bolder">Features</h5>
                     <p class="card-text">
                         <!-- card details -->
                     <ul id="features-${id}" class="list-unstyled features-ul">
@@ -73,7 +73,7 @@ const displayData = (dataList, datalimit) => {
                     <!-- date and modal details -->
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h5>${name}</h5>
+                            <h5 class="fw-bolder">${name}</h5>
                             <p><i class="bi bi-calendar4-week px-1"></i>${published_in}</p>
                         </div>
                         <button onclick="loadModalData('${id}')" class="rounded rounded-circle  border-0 text-danger h3" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
@@ -126,7 +126,7 @@ const displayModalData = (modalData) => {
     <div class="col">
         <div class="card card-one">
             <div class="card-body">
-                <h6 class="card-title">${description}</h6>
+                <h6 class="card-title fw-bolder">${description}</h6>
                 <div class="d-flex text-center pricing-plan">
                     <p class="card-text p-2 m-1 bg-white rounded-3 text-success fw-bold">
                         ${pricing ? pricing[0]?.price : 'Free of cost/'}<br>${pricing ? pricing[0]?.plan : 'Basic'}</p>
@@ -137,13 +137,13 @@ const displayModalData = (modalData) => {
                 </div>
                 <div class="d-flex justify-content-between ai-details">
                     <div>
-                        <h6>Features</h6>
+                        <h6 class="fw-bolder">Features</h6>
                         <ul id="modal-features-${id}">
                             
                         </ul>
                     </div>
                     <div>
-                        <h6>Integrations</h6>
+                        <h6 class="fw-bolder">Integrations</h6>
                         <ul id="modal-integrations-${id}">
                             
                         </ul>
@@ -157,11 +157,11 @@ const displayModalData = (modalData) => {
     <div class="col">
         <div class="card text-center position-relativ">
             <div>
-            <span id="accuracy-${id}" class="px-3 py-2 badge rounded-3 text-bg-danger bedge-position position-absolute badge-position">${accuracy ? accuracy?.score : ''} accuracy</span>
+            <span id="accuracy-${id}" class="px-3 py-2 badge rounded-3 text-bg-danger bedge-position position-absolute badge-position">${accuracy ? accuracy?.score * 100 : ''}% accuracy</span>
                 <img src="${image_link[0]}" class="card-img-top p-1 " alt="card image">
             </div>
             <div class="card-body">
-                <h6 class="card-title">${input_output_examples ? input_output_examples[0]?.input : 'no input examples found'}</h6>
+                <h6 class="card-title fw-bolder">${input_output_examples ? input_output_examples[0]?.input : 'no input examples found'}</h6>
                 <p class="card-text">${input_output_examples ? input_output_examples[0]?.output : 'No, Not yet, Take a break!'}</p>
             </div>
         </div>
