@@ -127,15 +127,15 @@ const displayModalData = (modalData) => {
         <div class="card card-one">
             <div class="card-body">
                 <h6 class="card-title">${description}</h6>
-                <div class="d-flex text-center">
+                <div class="d-flex text-center pricing-plan">
                     <p class="card-text p-2 m-1 bg-white rounded-3 text-success fw-bold">
-                        ${pricing ? pricing[0]?.price : 'price not found'}<br>${pricing ? pricing[0]?.plan : 'no plan yet!'}</p>
+                        ${pricing ? pricing[0]?.price : 'Free of cost/'}<br>${pricing ? pricing[0]?.plan : 'Basic'}</p>
                     <p class="card-text p-2 m-1 bg-white rounded-3 text-warning fw-bold">
-                    ${pricing ? pricing[1]?.price : 'no price found'}<br>${pricing ? pricing[1]?.plan : 'not found'}</p>
+                    ${pricing ? pricing[1]?.price : 'Free of cost/'}<br>${pricing ? pricing[1]?.plan : 'Pro'}</p>
                     <p class="card-text p-2 m-1 bg-white rounded-3 text-danger fw-bold">
-                    ${pricing ? pricing[2]?.price : 'Pricing not found'}<br>${pricing ? pricing[2]?.plan : 'No plan yet!'}</p>
+                    ${pricing ? pricing[2]?.price : 'Pricing not fixed yet!'}<br>${pricing ? pricing[2]?.plan : 'Enterprise!'}</p>
                 </div>
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between ai-details">
                     <div>
                         <h6>Features</h6>
                         <ul id="modal-features-${id}">
@@ -162,7 +162,7 @@ const displayModalData = (modalData) => {
             </div>
             <div class="card-body">
                 <h6 class="card-title">${input_output_examples ? input_output_examples[0]?.input : 'no input examples found'}</h6>
-                <p class="card-text">${input_output_examples ? input_output_examples[0]?.output : 'no output examles found!'}</p>
+                <p class="card-text">${input_output_examples ? input_output_examples[0]?.output : 'No, Not yet, Take a break!'}</p>
             </div>
         </div>
     </div>
@@ -175,7 +175,9 @@ const displayModalData = (modalData) => {
     }
     // modal integrations details
     const ulIntegrations = document.getElementById(`modal-integrations-${id}`);
-    if (integrations === null) { return 'not found yet!' };
+    if (integrations === null) {
+        return ulIntegrations.innerHTML += `<li>No Data Found</li>`;
+    };
     integrations.forEach(integration => {
         ulIntegrations.innerHTML += `<li>${integration}</li>`;
     })

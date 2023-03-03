@@ -11,6 +11,8 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- Bootstrap icon link -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <!-- Embedded Stylesheet add -->
     <style>
         .cross {
             background-color: red;
@@ -27,7 +29,6 @@
 
         .my-width {
             max-width: 900px;
-            max-height: 800px;
         }
 
         .badge-position {
@@ -38,6 +39,22 @@
         #accuracy-12 {
             display: none;
         }
+
+        /* Responsive ness */
+        @media only screen and (max-width: 600px) and (min-width: 249px) {
+
+            .pricing-plan {
+                display: flex;
+                /* grid-template-columns: repeat(1, 1fr); */
+                flex-direction: column;
+
+            }
+
+            .ai-details {
+                display: flex;
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 
@@ -47,7 +64,7 @@
     </header>
     <!-- Main Section -->
     <!-- ------------ -->
-    <main>
+    <main class="px-1">
         <!-- Display section -->
         <section class="container mx-auto py-5">
             <!-- sort by date -->
@@ -68,12 +85,12 @@
             </div>
             <!-- show-all button -->
             <div id="show-all" class="text-center mt-4">
-                <button id="btn-show-all" class="fw-bold btn btn-danger py-3 px-4">Show All</button>
+                <button id="btn-show-all" class="fw-bold btn btn-danger py-3 px-4">See More</button>
             </div>
 
             <!-- modal -->
             <!-- Modal -->
-            <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade px-3 py-4" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered my-width">
                     <div class="modal-content">
