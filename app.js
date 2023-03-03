@@ -114,7 +114,7 @@ const loadModalData = async (id) => {
 // data display on modal's card
 const displayModalData = (modalData) => {
     const { id, description, pricing, features, integrations, input_output_examples, image_link, accuracy } = modalData;
-    console.log(modalData, id);
+    // console.log(modalData, id);
 
 
     const cards = document.getElementById('card-details');
@@ -186,7 +186,7 @@ const displayModalData = (modalData) => {
     if (accuracy.score === null || accuracy.score === 'null') {
         const accuracyId = document.getElementById(`accuracy-${id}`);
         accuracyId.classList.add('d-none');
-        console.log(`accuracy-${id}`);
+        // console.log(`accuracy-${id}`);
     }
 
 }
