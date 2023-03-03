@@ -6,42 +6,57 @@ const loadData = async (datalimit) => {
     const res = await fetch(url);
     const allData = await res.json();
     displayData(allData.data.tools, datalimit);
+    // Show-all button
+    document.getElementById('btn-show-all').addEventListener('click', function () {
+        // star spinner
+        toggleSpinner(true);
+        loadData(6);
+    })
 }
 
-// fetching(load) sort data
-const loadsortData = async (datalimit) => {
-    // start spinner
-    toggleSpinner(true);
-    const url = `https://openapi.programming-hero.com/api/ai/tools`;
-    const res = await fetch(url);
-    const allData = await res.json();
-    allData.data.tools.sort(function (a, b) {
-        return new Date(a.published_in) - new Date(b.published_in)
-    });
-    displayData(allData.data.tools, datalimit);
-}
-
-
-
+// adding button sort by date
+document.getElementById('btn-sort').addEventListener('click', function () {
+    //     loadSortData();
+    // fetching(load) and sending the data by date sort
+    const loadSortData = async (datalimit) => {
+        // start spinner
+        toggleSpinner(true);
+        const url = `https://openapi.programming-hero.com/api/ai/tools`;
+        const res = await fetch(url);
+        const allData = await res.json();
+        allData.data.tools.sort(function (a, b) {
+            return new Date(a.published_in) - new Date(b.published_in)
+        });
+        displayData(allData.data.tools, datalimit);
+        // Show-all button
+        document.getElementById('btn-show-all').addEventListener('click', function () {
+            // star spinner
+            toggleSpinner(true);
+            loadSortData(6);
+        })
+    }
+    loadSortData();
+})
 
 // display all data
 const displayData = (dataList, datalimit) => {
     const cardContainer = document.getElementById('card-container');
     cardContainer.textContent = '';
+
     // limit data/show-all
+    const showAllBtn = document.getElementById('show-all');
     if (datalimit === undefined) {
         dataList = dataList.slice(0, 6);
+        showAllBtn.classList.remove('d-none');
     }
     else {
-        const showAllBtn = document.getElementById('show-all');
         dataList = dataList;
         showAllBtn.classList.add('d-none');
     }
 
-    // display single card
+    // display data on single card
     dataList.forEach(data => {
         const { id, name, features, published_in, image } = data;
-
         cardContainer.innerHTML += `     
 
         <div class="col">
@@ -87,14 +102,8 @@ const toggleSpinner = (isLoading) => {
     isLoading ? spinnig.classList.remove('d-none') : spinnig.classList.add('d-none');
 }
 
-// Show-all button
-document.getElementById('btn-show-all').addEventListener('click', function () {
-    // star spinner
-    toggleSpinner(true);
-    loadData(6);
-})
 
-// data on modal
+// fetching data on modal
 const loadModalData = async (id) => {
     const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
     const res = await fetch(url);
@@ -102,10 +111,14 @@ const loadModalData = async (id) => {
     displayModalData(modalData.data);
 }
 
-// display on modal's card
+// data display on modal's card
 const displayModalData = (modalData) => {
     const { id, description, pricing, features, integrations, input_output_examples, image_link, accuracy } = modalData;
+    console.log(modalData, id);
+
+
     const cards = document.getElementById('card-details');
+    cards.textContent = '';
 
     // Modal Card display
     cards.innerHTML = `
@@ -116,11 +129,11 @@ const displayModalData = (modalData) => {
                 <h6 class="card-title">${description}</h6>
                 <div class="d-flex text-center">
                     <p class="card-text p-2 m-1 bg-white rounded-3 text-success fw-bold">
-                        ${pricing[0].price}<br>${pricing[0].plan}</p>
+                        ${pricing ? pricing[0]?.price : 'price not found'}<br>${pricing ? pricing[0]?.plan : 'no plan yet!'}</p>
                     <p class="card-text p-2 m-1 bg-white rounded-3 text-warning fw-bold">
-                    ${pricing[1].price}<br>${pricing[1].plan}</p>
+                    ${pricing ? pricing[1]?.price : 'no price found'}<br>${pricing ? pricing[1]?.plan : 'not found'}</p>
                     <p class="card-text p-2 m-1 bg-white rounded-3 text-danger fw-bold">
-                    ${pricing[2].price}<br>${pricing[2].plan}</p>
+                    ${pricing ? pricing[2]?.price : 'Pricing not found'}<br>${pricing ? pricing[2]?.plan : 'No plan yet!'}</p>
                 </div>
                 <div class="d-flex justify-content-between">
                     <div>
@@ -142,11 +155,14 @@ const displayModalData = (modalData) => {
 
     
     <div class="col">
-        <div class="card text-center">
-            <img src="${image_link[0]}" class="card-img-top p-1 " alt="...">
+        <div class="card text-center position-relativ">
+            <div>
+            <span id="accuracy-${id}" class="px-3 py-2 badge rounded-3 text-bg-danger bedge-position position-absolute badge-position">${accuracy ? accuracy?.score : ''} accuracy</span>
+                <img src="${image_link[0]}" class="card-img-top p-1 " alt="card image">
+            </div>
             <div class="card-body">
-                <h6 class="card-title">${input_output_examples[0].input}</h6>
-                <p class="card-text">${input_output_examples[0].output}</p>
+                <h6 class="card-title">${input_output_examples ? input_output_examples[0]?.input : 'no input examples found'}</h6>
+                <p class="card-text">${input_output_examples ? input_output_examples[0]?.output : 'no output examles found!'}</p>
             </div>
         </div>
     </div>
@@ -159,19 +175,28 @@ const displayModalData = (modalData) => {
     }
     // modal integrations details
     const ulIntegrations = document.getElementById(`modal-integrations-${id}`);
+    if (integrations === null) { return 'not found yet!' };
     integrations.forEach(integration => {
-        ulIntegrations.innerHTML += `<li>${integration}</li>`
+        ulIntegrations.innerHTML += `<li>${integration}</li>`;
     })
+
+    // accurecy
+    if (accuracy.score === null || accuracy.score === 'null') {
+        const accuracyId = document.getElementById(`accuracy-${id}`);
+        accuracyId.classList.add('d-none');
+        console.log(`accuracy-${id}`);
+    }
+
 }
 
 
 // adding button sort by date
-document.getElementById('btn-sort').addEventListener('click', function () {
-    loadsortData();
-})
+// document.getElementById('btn-sort').addEventListener('click', function () {
+//     loadSortData();
+// })
 
 // invoking all data
 loadData();
 // invoking modal data
-loadModalData('03');
+// loadModalData('03');
 
